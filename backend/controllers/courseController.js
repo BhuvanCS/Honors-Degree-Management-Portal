@@ -24,14 +24,14 @@ export const addCourse = async (req, res) => {
   };
 
   export const editCourse = async (req, res) => {
-    const { id } = req.params;
-    const { courseId, name, subject, description, duration, credits, startdate, examdate } = req.body;
+    const { courseId } = req.params;
+    const { cId, name, subject, description, duration, credits, startdate, examdate } = req.body;
   
     try {
-      const course = await Course.findById(id);
+      const course = await Course.findOne({ courseId });
   
       if (course) {
-        course.courseId = courseId || course.courseId;
+        course.courseId = cId || course.courseId;
         course.name = name || course.name;
         course.subject = subject || course.subject;
         course.description = description || course.description;
@@ -50,7 +50,7 @@ export const addCourse = async (req, res) => {
     }
   };
 
-  
+
 export const getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find();
@@ -64,10 +64,10 @@ export const getCourseStudents = async (req, res) => {
   const { courseId } = req.params;
 
   try {
-    const course = await Course.findById(courseId).populate('students');
+    const course = await Course.findOne({courseId}).populate('students');
     if (!course) return res.status(404).json({ message: 'Course not found' });
 
-    res.status(200).json(course.students);
+    res.status(200).json(course);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -19,3 +19,11 @@ export const protect = async (req, res, next) => {
     res.status(401).json({ message: 'Not authorized, no token' });
   }
 };
+
+export const authorizeProfileAccess = (req, res, next) => {
+    if (req.user.role === 'admin' || req.user.usn === req.params.usn) {
+      next();
+    } else {
+      res.status(403).json({ message: 'Access denied' });
+    }
+  };

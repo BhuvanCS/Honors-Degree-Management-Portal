@@ -6,6 +6,11 @@ export const register = async (req, res) => {
   const { usn, password, name, cgpa } = req.body;
 
   try {
+    const userExists = await User.findOne({ usn });
+
+    if (userExists) {
+      return res.status(400).json({ message: 'USN already exists' });
+    }
     const user = new User({
       usn,
       password: bcrypt.hashSync(password, 8),

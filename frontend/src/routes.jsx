@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import { AuthProvider } from './context/AuthContext.jsx';
+import RegisterPage from './pages/Register';
 // import AdminDashboard from './pages/Admin/AdminDashboard';
 // import StudentDashboard from './pages/Student/StudentDashboard';
 
@@ -26,6 +27,7 @@ const ProtectedRoute = ({ children, role }) => {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<RegisterPage />} />
             {/* <Route
               path="/admin"
               element={

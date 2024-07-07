@@ -5,7 +5,8 @@ const api = axios.create({
 });
 
 export const register = (data) => api.post('/auth/register', data);
-export const login = (data) => api.post('/auth/login', data);
+
+export const getCourseList = () => api.get('/courses');
 export const addCourse = (data, token) =>
   api.post('/courses/add', data, {
     headers: { Authorization: `Bearer ${token}` },

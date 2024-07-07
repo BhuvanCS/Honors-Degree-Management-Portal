@@ -11,12 +11,15 @@ export const AuthProvider = ({ children }) => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem('token');
+        console.log('token:', token)
         if (token) {
             const { usn } = JSON.parse(atob(token.split('.')[1]));
+            console.log(usn)
           const res = await axios.get(`http://localhost:5002/api/students/${usn}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data);
+          console.log(res.data)
         }
       } catch (error) {
         console.error('Error fetching user:', error);
@@ -28,8 +31,25 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  const login = async (usn, password) => {
+    try {
+      const res = await axios.post('http://localhost:5002/api/auth/login', { usn, password });
+      console.log(res.data)
+      localStorage.setItem('token', res.data.token);
+      setUser(res.data.user);
+      return res;
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider value={{ user, setUser, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

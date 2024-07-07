@@ -37,11 +37,11 @@ export const login = async (req, res) => {
 
     if (!user.isAccepted) return res.status(403).json({ message: 'Student Not Accepted yet! Contact Admin for more details.' });
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ usn: usn, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: '1d',
     });
 
-    res.status(200).json({ token });
+    res.status(200).json({ token, user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data);
-          console.log(res.data)
+          console.log(user)
         }
       } catch (error) {
         console.error('Error fetching user:', error);

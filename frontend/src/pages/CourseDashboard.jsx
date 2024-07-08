@@ -133,7 +133,7 @@ function AddCourse() {
       navigate('/add-course');
     };
   return (
-    <Button variant="text" startIcon={<AddIcon />}>
+    <Button variant="text" startIcon={<AddIcon />} onClick={handleClick}>
       Add Record
     </Button>
   );

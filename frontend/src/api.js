@@ -7,6 +7,10 @@ const api = axios.create({
 export const register = (data) => api.post('/auth/register', data);
 
 export const getCourseList = () => api.get('/courses');
+
+export const getProfile = (usn, token) => api.get(`/students/${usn}`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
 export const addCourse = (data, token) =>
   api.post('/courses/add', data, {
     headers: { Authorization: `Bearer ${token}` },

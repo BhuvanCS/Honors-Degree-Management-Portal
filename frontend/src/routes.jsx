@@ -1,12 +1,19 @@
-import React, { useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import axios from 'axios';
-import Login from './pages/Login';
-import AuthContext, { AuthProvider } from './context/AuthContext.jsx';
-import RegisterPage from './pages/Register';
-import CourseList from './pages/CourseList.jsx';
-import Logout from './components/Logout.jsx';
-import CourseDashboard from './pages/CourseDashboard.jsx';
+import React, { useContext, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import axios from "axios";
+import Login from "./pages/Login";
+import AuthContext, { AuthProvider } from "./context/AuthContext.jsx";
+import RegisterPage from "./pages/Register";
+import CourseList from "./pages/CourseList.jsx";
+import Logout from "./components/Logout.jsx";
+import CourseDashboard from "./pages/CourseDashboard.jsx";
+import AddCourse from "./pages/AddCourse.jsx";
+import Profile from "./pages/Profile.jsx";
 // import AdminDashboard from './pages/Admin/AdminDashboard';
 // import StudentDashboard from './pages/Student/StudentDashboard';
 
@@ -16,16 +23,19 @@ const ProtectedRoute = ({ children, role }) => {
   useEffect(() => {
     const fetchUser = async () => {
       if (!user) {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (token) {
           try {
-            const { usn } = JSON.parse(atob(token.split('.')[1]));
-            const res = await axios.get(`http://localhost:5002/api/students/${usn}`, {
-              headers: { Authorization: `Bearer ${token}` },
-            });
+            const { usn } = JSON.parse(atob(token.split(".")[1]));
+            const res = await axios.get(
+              `http://localhost:5002/api/students/${usn}`,
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
             setUser(res.data);
           } catch (error) {
-            console.error('Error fetching user:', error);
+            console.error("Error fetching user:", error);
           }
         }
       }
@@ -37,7 +47,7 @@ const ProtectedRoute = ({ children, role }) => {
   }, [user, loading, setUser]);
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (!user) {
@@ -45,7 +55,7 @@ const ProtectedRoute = ({ children, role }) => {
   }
 
   // Additional role-based access control
-  if (role && user.role !== role) {
+  if (role && (role === 'admin' && user.role === "student")) {
     return <Navigate to="/unauthorized" />; // Redirect to an unauthorized page if roles don't match
   }
 
@@ -53,6 +63,7 @@ const ProtectedRoute = ({ children, role }) => {
 };
 
 function AppRoutes() {
+  
   return (
     <AuthProvider>
       <Router>
@@ -77,7 +88,15 @@ function AppRoutes() {
             path="/add-course"
             element={
               <ProtectedRoute role="admin">
-                <AddCourseForm />
+                <AddCourse />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/:usn?"
+            element={
+              <ProtectedRoute role="student">
+                <Profile />
               </ProtectedRoute>
             }
           />

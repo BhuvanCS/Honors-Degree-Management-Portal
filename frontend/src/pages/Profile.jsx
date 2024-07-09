@@ -64,7 +64,7 @@ const Profile = () => {
   }
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx = {{pt: { xs: 14, sm: 15 }, pb: { xs: 8, sm: 8 }}}>
       <StyledPaper>
         <Box display="flex" alignItems="center" mb={2}>
           <Avatar sx={{ bgcolor: "primary.main", mr: 2 }}>

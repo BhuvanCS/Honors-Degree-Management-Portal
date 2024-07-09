@@ -64,6 +64,7 @@ const Register = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            pt: { xs: 14, sm: 5 }, pb: { xs: 8, sm: 8 }
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

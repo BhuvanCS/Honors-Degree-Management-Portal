@@ -62,6 +62,8 @@ const AddCourse = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            pt: { xs: 14, sm: 20 },
+            pb: { xs: 8, sm: 12 },
           }}
         >
           <Typography component="h1" variant="h5">

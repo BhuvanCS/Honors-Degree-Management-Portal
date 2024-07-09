@@ -1,6 +1,7 @@
 import React from 'react';
 import { alpha, Box, Container, Stack, Typography } from '@mui/material';
-import Guidelines from './GuideLines';
+import Guidelines from './Guidelines';
+
 
 export default function Hero() {
   return (
@@ -61,7 +62,7 @@ export default function Hero() {
         </Stack>
      
       </Container>
-      <Guidelines />
+      
     </Box>
   );
 }

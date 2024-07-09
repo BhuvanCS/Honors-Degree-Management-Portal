@@ -16,6 +16,7 @@ import {
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 import { getCourseList } from "../api";
+import { Box } from "@mui/material";
 const columns = [
   // {
   //   field: "action",headerName: "Action",sortable: false,
@@ -106,7 +107,7 @@ export default function CourseDashboard() {
   };
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <Box sx={{ height: 400, width: "100%", pt: { xs: 14, sm: 15 }, pb: { xs: 8, sm: 8 } }}>
       <DataGrid
         onRowClick={handleRowClick}
         rows={coursedata}
@@ -121,8 +122,10 @@ export default function CourseDashboard() {
         slots={{
           toolbar: CustomToolbar,
         }}
+
+        sx = {{pl:2, pt: 2}}
       />
-    </div>
+    </Box>
   );
 }
 

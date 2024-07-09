@@ -4,16 +4,20 @@ import {
   Route,
   Routes,
   Navigate,
+  Outlet,
 } from "react-router-dom";
 import axios from "axios";
 import Login from "./pages/Login";
 import AuthContext, { AuthProvider } from "./context/AuthContext.jsx";
 import RegisterPage from "./pages/Register";
 import CourseList from "./pages/CourseList.jsx";
-import Logout from "./components/Logout.jsx";
+
 import CourseDashboard from "./pages/CourseDashboard.jsx";
 import AddCourse from "./pages/AddCourse.jsx";
 import Profile from "./pages/Profile.jsx";
+import Logout from "./components/shared/Logout.jsx";
+import LandingPage from "./pages/LandingPage.jsx";
+import Layout from "./components/Layout.jsx";
 // import AdminDashboard from './pages/Admin/AdminDashboard';
 // import StudentDashboard from './pages/Student/StudentDashboard';
 
@@ -55,24 +59,20 @@ const ProtectedRoute = ({ children, role }) => {
   }
 
   // Additional role-based access control
-  if (role && (role === 'admin' && user.role === "student")) {
+  if (role && role === "admin" && user.role === "student") {
     return <Navigate to="/unauthorized" />; // Redirect to an unauthorized page if roles don't match
   }
 
-  return children;
+  return children || <Outlet />;
 };
 
-function AppRoutes() {
-  
+function AppRoutes({ mode, toggleColorMode }) {
   return (
     <AuthProvider>
       <Router>
-        <div>
-          <nav>
-            <Logout />
-          </nav>
-        </div>
         <Routes>
+        <Route element={<Layout mode={mode} toggleColorMode={toggleColorMode} />} > 
+          <Route path="/" element={<LandingPage mode={mode} toggleColorMode={toggleColorMode}/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/courselist" element={<CourseList />} />
@@ -110,6 +110,7 @@ function AppRoutes() {
             }
           /> */}
           {/* Add more routes as needed */}
+          </Route>
         </Routes>
       </Router>
     </AuthProvider>

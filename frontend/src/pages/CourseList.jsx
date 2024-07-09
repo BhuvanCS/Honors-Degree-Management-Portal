@@ -16,7 +16,7 @@ import AuthContext from "../context/AuthContext";
 // const coursedata=[1,2,3,4,5,5]
 
 export default function CourseList() {
-    const { user, loading, setUser } = React.useContext(AuthContext);
+  const { user, loading, setUser } = React.useContext(AuthContext);
   const [courselist, setCourselist] = React.useState([]);
 
   React.useEffect(() => {
@@ -38,7 +38,7 @@ export default function CourseList() {
 
   return (
     <>
-      <Box sx={{ p: 2 }}>
+      <Box sx={{ p: 2, pt: { xs: 14, sm: 15 }, pb: { xs: 8, sm: 8 } }}>
         <Typography gutterBottom variant="h5" component="div" sx={{ mb: 3 }}>
           Course List
         </Typography>

@@ -39,7 +39,7 @@ const guidelines = [
 
 const Guidelines = () => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', my: 5 }}>
       <Container sx={{ alignSelf: "center" }}>
         <Typography
           variant="h4"

@@ -27,7 +27,8 @@ export const addCourseToStudent = async (req, res) => {
         const studentCourse = new StudentCourse({
           student: student._id,
           course: course._id,
-          completionPercentage: 0, // Initial percentage
+          certificateLink: '',
+          isCompleted: false
         });
 
         await studentCourse.save();
@@ -38,7 +39,7 @@ export const addCourseToStudent = async (req, res) => {
         await course.save();
 
         res.status(201).json({
-          message: "Course added to student with initial completion percentage",
+          message: "Course added to student",
         });
       } else {
         res.status(403).json({
@@ -53,8 +54,8 @@ export const addCourseToStudent = async (req, res) => {
   }
 };
 
-export const updateCompletionPercentage = async (req, res) => {
-  const { usn, courseId, percentage } = req.body;
+export const uploadCertificate = async (req, res) => {
+  const { usn, courseId, certificateLink } = req.body;
 
   try {
     const student = await User.findOne({ usn });
@@ -70,9 +71,9 @@ export const updateCompletionPercentage = async (req, res) => {
       });
 
       if (studentCourse) {
-        studentCourse.completionPercentage = percentage;
+        studentCourse.certificateLink = certificateLink;
         await studentCourse.save();
-        res.status(200).json({ message: "Completion percentage updated" });
+        res.status(200).json({ message: "Certificate uploaded succesfully!" });
       } else {
         res
           .status(404)
@@ -89,6 +90,41 @@ export const updateCompletionPercentage = async (req, res) => {
   }
 };
 
+export const verifyCourseCompletion = async (req, res) => {
+  const { usn, courseId, isCompleted } = req.body;
+
+  try {
+    const student = await User.findOne({ usn });
+    const course = await Course.findOne({ courseId });
+
+
+    if(!student || !course) {
+        res.status(404).json({ message: "Student or course not found" });
+    }
+    if (req.user.role === "admin") {
+      const studentCourse = await StudentCourse.findOne({
+        student,
+        course,
+      });
+      if (studentCourse) {
+        studentCourse.isCompleted = isCompleted;
+        await studentCourse.save();
+        res.status(200).json({ message: "Course completion verified successfully!" });
+      } else {
+        res
+          .status(404)
+          .json({ message: "This student has not erolled to this course!" });
+      }
+    }
+    else {
+        res.status(403).json({
+            message: "You do not have permission to perform this action",
+          });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 export const getStudentProgressForCourse = async (req, res) => {
   const { courseId } = req.params;
 
@@ -101,8 +137,9 @@ export const getStudentProgressForCourse = async (req, res) => {
 
     const progress = studentCourses.map((sc) => ({
       studentName: sc.student.name,
-      completionPercentage: sc.completionPercentage,
       courseName: sc.course.name,
+      certificateLink: sc.certificateLink,
+      isCompleted: sc.isCompleted
     }));
 
     res.status(200).json(progress);

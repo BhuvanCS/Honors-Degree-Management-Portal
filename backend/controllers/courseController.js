@@ -2,17 +2,20 @@ import Course from '../models/Course.js';
 import User from '../models/User.js';
 
 export const addCourse = async (req, res) => {
-    const { courseId, name, subject, description, duration, credits, startdate, examdate } = req.body;
+    const { courseId, name, subject, professor, institute, description, duration, credits, startdate, enddate, examdate } = req.body;
   
     try {
       const course = new Course({
         courseId,
         name,
         subject,
+        professor,
+        institute,
         description,
         duration,
         credits,
         startdate,
+        enddate,
         examdate,
       });
   
@@ -25,7 +28,7 @@ export const addCourse = async (req, res) => {
 
   export const editCourse = async (req, res) => {
     const { courseId } = req.params;
-    const { cId, name, subject, description, duration, credits, startdate, examdate } = req.body;
+    const { cId, name, subject, professor, institute, description, duration, credits, startdate, enddate, examdate } = req.body;
   
     try {
       const course = await Course.findOne({ courseId });
@@ -34,10 +37,13 @@ export const addCourse = async (req, res) => {
         course.courseId = cId || course.courseId;
         course.name = name || course.name;
         course.subject = subject || course.subject;
+        course.professor = professor || course.professor;
+        course.institute = institute || course.institute;
         course.description = description || course.description;
         course.duration = duration || course.duration;
         course.credits = credits || course.credits;
         course.startdate = startdate || course.startdate;
+        course.enddate = enddate || course.enddate;
         course.examdate = examdate || course.examdate;
   
         const updatedCourse = await course.save();

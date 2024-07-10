@@ -99,7 +99,7 @@ export const verifyCourseCompletion = async (req, res) => {
 
 
     if(!student || !course) {
-        res.status(404).json({ message: "Student or course not found" });
+        return res.status(404).json({ message: "Student or course not found" });
     }
     if (req.user.role === "admin") {
       const studentCourse = await StudentCourse.findOne({
@@ -109,20 +109,20 @@ export const verifyCourseCompletion = async (req, res) => {
       if (studentCourse) {
         studentCourse.isCompleted = isCompleted;
         await studentCourse.save();
-        res.status(200).json({ message: "Course completion verified successfully!" });
+        return res.status(200).json({ message: "Course completion verified successfully!" });
       } else {
-        res
+        return res
           .status(404)
           .json({ message: "This student has not erolled to this course!" });
       }
     }
     else {
-        res.status(403).json({
+        return res.status(403).json({
             message: "You do not have permission to perform this action",
           });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 export const getStudentProgressForCourse = async (req, res) => {
@@ -137,6 +137,7 @@ export const getStudentProgressForCourse = async (req, res) => {
 
     const progress = studentCourses.map((sc) => ({
       studentName: sc.student.name,
+      usn: sc.student.usn,
       courseName: sc.course.name,
       certificateLink: sc.certificateLink,
       isCompleted: sc.isCompleted

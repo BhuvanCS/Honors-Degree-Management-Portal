@@ -70,7 +70,7 @@ export const getCourseStudents = async (req, res) => {
   const { courseId } = req.params;
 
   try {
-    const course = await Course.findOne({courseId}).populate('students');
+    const course = await Course.findOne({courseId}).select('-students ');
     if (!course) return res.status(404).json({ message: 'Course not found' });
 
     res.status(200).json(course);

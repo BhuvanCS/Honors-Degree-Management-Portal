@@ -23,12 +23,14 @@ export const getStudentProfile = async (req, res) => {
       }).populate("course");
       const courses = studentCourses.map((sc) => ({
         course: sc.course,
-        completionPercentage: sc.completionPercentage,
+        certificateLink: sc.certificateLink,
+        isCompleted: sc.isCompleted
       }));
 
       const profile = {
         usn: student.usn,
         name: student.name,
+        email: student.email,
         cgpa: student.cgpa,
         role: student.role,
         courses: courses,

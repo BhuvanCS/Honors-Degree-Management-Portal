@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
 export const register = async (req, res) => {
-  const { usn, password, name, cgpa } = req.body;
+  const { usn, password, email, name, cgpa } = req.body;
 
   try {
     const userExists = await User.findOne({ usn });
@@ -15,6 +15,7 @@ export const register = async (req, res) => {
       usn,
       password: bcrypt.hashSync(password, 8),
       name,
+      email,
       cgpa,
     });
 

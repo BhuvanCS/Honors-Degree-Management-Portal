@@ -8,17 +8,41 @@ import { CardActionArea, CardActions, Stack } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
+import AuthContext from '../../context/AuthContext';
+import { enrollToCourse } from '../../api';
 
-export default function StudentCourseCard({ courseId }) {
+export default function CourseCardEnroll({ course }) {
   const navigate = useNavigate();
+  const { user } = React.useContext(AuthContext);
 
   const handleCardClick = () => {
-    navigate(`/courseinfo`,{ state: {'course_name':"course_name"} });
+    navigate(`/courseinfo`, { state: { 'course_name': course.name } });
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     console.log('Add to Registered Course clicked');
-    // Implement your logic here, for example, adding the course to the registered courses list
+    try {
+      const data = { courseId: course.courseId, usn: user.usn };
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      console.log('Token:', token);
+      console.log('Data:', data);
+
+      // Call the enrollToCourse API
+      const response = await enrollToCourse(data, token);
+      console.log('Response:', response);
+      console.log("Successfully Registered for course " + course.courseId);
+
+      // Navigate to the student page after successful enrollment
+      navigate('/student');
+    } catch (error) {
+      console.error('Error enrolling to course:', error.message);
+      // Handle error as needed, e.g., show an error message
+    }
   };
 
   return (
@@ -32,10 +56,10 @@ export default function StudentCourseCard({ courseId }) {
         />
         <CardContent>
           <Typography gutterBottom variant="body2" component="div">
-            Course Name
+            {course.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Info
+            {course.subject}
           </Typography>
         </CardContent>
       </CardActionArea>

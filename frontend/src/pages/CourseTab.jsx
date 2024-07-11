@@ -49,12 +49,12 @@ export default function CourseTab({courses}) {
           <TableBody>
           {courses.map((course) => (
                     <TableRow key={course.course_name} hover role="button" tabIndex={-1} onClick={() => handleRowClick(course)}>
-                      <TableCell align="left">{course.course_name}</TableCell>
+                      <TableCell align="left">{course.name}</TableCell>
            <TableCell align="left">{course.institute}</TableCell>
-        <TableCell align="left">{course.duration_weeks}</TableCell>
+        <TableCell align="left">{course.duration}</TableCell>
         <TableCell align="left">{course.credits}</TableCell>
-        <TableCell align="left">{course.start_date}</TableCell>
-        <TableCell align="left">{course.exam_date}</TableCell>
+        <TableCell align="left">{course.startdate}</TableCell>
+        <TableCell align="left">{course.examdate}</TableCell>
         
                     </TableRow>
                   ))}

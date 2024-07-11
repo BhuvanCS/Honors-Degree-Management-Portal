@@ -41,10 +41,10 @@ const Profile = () => {
       } catch (error) {
         console.error("Error getting profile: " + error.message);
         if (error.response && error.response.status === 403) {
-            setError("You don't have access to view this user's profile.");
-          } else {
-            setError("An error occurred while fetching the profile.");
-          }
+          setError("You don't have access to view this user's profile.");
+        } else {
+          setError("An error occurred while fetching the profile.");
+        }
       }
     };
 
@@ -64,7 +64,10 @@ const Profile = () => {
   }
 
   return (
-    <Container maxWidth="md" sx = {{pt: { xs: 14, sm: 15 }, pb: { xs: 8, sm: 8 }}}>
+    <Container
+      maxWidth="md"
+      sx={{ pt: { xs: 14, sm: 15 }, pb: { xs: 8, sm: 8 } }}
+    >
       <StyledPaper>
         <Box display="flex" alignItems="center" mb={2}>
           <Avatar sx={{ bgcolor: "primary.main", mr: 2 }}>
@@ -83,7 +86,7 @@ const Profile = () => {
           Enrolled Courses
         </Typography>
         <List>
-          {profile.courses.map(({ course, completionPercentage }) => (
+          {profile.courses.map(({ course, isCompleted }) => (
             <React.Fragment key={course._id}>
               <ListItem
                 button
@@ -109,10 +112,18 @@ const Profile = () => {
                       <Box mt={1}>
                         <LinearProgress
                           variant="determinate"
-                          value={completionPercentage}
+                          value={isCompleted ? 100 : 10}
+                          color={isCompleted ? "success" : "primary"}
+                          sx={{
+                            "& .MuiLinearProgress-bar": {
+                              backgroundColor: isCompleted ? "green" : "blue",
+                            },
+                          }}
                         />
                         <Typography variant="body2" color="textSecondary">
-                          {completionPercentage}% completed
+                          {isCompleted
+                            ? "Completed and Verified"
+                            : "In progress"}
                         </Typography>
                       </Box>
                     </>

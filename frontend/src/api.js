@@ -25,12 +25,24 @@ export const verifyCompletion = (data, token) =>
     headers: { Authorization: `Bearer ${token}` },
   });
 
+export const getAllStudents = (token) =>
+  api.get(`/students/`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 export const getProfile = (usn, token) =>
   api.get(`/students/${usn}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 export const getStudentProfile = (usn, token) =>
   api.get(`/students/${usn}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+export const enrollToCourse = (data, token) =>
+  api.post('/studentcourse/add', data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+export const uploadCertificate = (data, token) =>
+  api.patch('/studentcourse/uploadCertificate', data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

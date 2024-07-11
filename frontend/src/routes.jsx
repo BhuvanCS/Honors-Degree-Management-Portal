@@ -19,6 +19,9 @@ import Logout from "./components/shared/Logout.jsx";
 import LandingPage from "./pages/LandingPage.jsx";
 import Layout from "./components/Layout.jsx";
 import CourseDetail from "./pages/CourseDetail.jsx";
+import StudentList from "./pages/StudentList.jsx";
+import StudentLandingPage from "./pages/StudentLandingPage.jsx";
+import CourseListEnroll from "./pages/CourseListEnroll.jsx";
 // import AdminDashboard from './pages/Admin/AdminDashboard';
 // import StudentDashboard from './pages/Student/StudentDashboard';
 
@@ -78,6 +81,22 @@ function AppRoutes({ mode, toggleColorMode }) {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/courselist" element={<CourseList />} />
           <Route
+            path="/student"
+            element={
+              <ProtectedRoute role="student">
+                <StudentLandingPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/courselist/enroll"
+            element={
+              <ProtectedRoute role="student">
+                <CourseListEnroll />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/coursedashboard"
             element={
               <ProtectedRoute role="admin">
@@ -98,6 +117,14 @@ function AppRoutes({ mode, toggleColorMode }) {
             element={
               <ProtectedRoute role="admin">
                 <AddCourse />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/allstudents"
+            element={
+              <ProtectedRoute role="admin">
+                <StudentList />
               </ProtectedRoute>
             }
           />

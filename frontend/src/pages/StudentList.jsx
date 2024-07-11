@@ -14,8 +14,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
-import CourseTab from './coursetab';
+import CourseTab from './CourseTab';
 import { useNavigate } from "react-router-dom";
+import { getAllStudents } from '../api';
 
 
 const studentdata = [
@@ -261,11 +262,11 @@ const studentdata = [
 function Row(props) {
   const navigate = useNavigate();
   
-  const handleRowClick = (student) => { navigate("/studentinfo",{ state: student })};  // add route in index.js   <Route path="/studentinfo" element={<StudentInfo />} />
+  const handleRowClick = (student) => { navigate(`/profile/${student.usn}`,{ state: student })};  
   
   const { student } = props;
   const [open, setOpen] = React.useState(false);
-  console.log(student.enrolled_courses.course_name)
+  //console.log(student.enrolled_courses.course_name)
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -279,10 +280,9 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">{student.name}</TableCell>
-        <TableCell align="left">{student.id}</TableCell>
-        <TableCell align="left">{student.semester}</TableCell>
-        <TableCell align="left">{student.department}</TableCell>
-        <TableCell align="left">{student.section}</TableCell>
+        <TableCell align="left">{student.usn}</TableCell>
+        <TableCell align="left">{student.name}</TableCell> 
+        <TableCell align="left">{student.email}</TableCell>
         <TableCell ><Button variant="outlined" onClick={() =>{handleRowClick(student)}} startIcon={<EditIcon /> }>
         Edit</Button></TableCell>
       </TableRow>
@@ -290,7 +290,7 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={open} timeout="auto" unmountOnExit>
           
-            <CourseTab  courses={student.enrolled_courses}/>
+            <CourseTab  courses={student.courses}/>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -324,25 +324,55 @@ Row.propTypes = {
 };
 
 export default function StudentList() {
-  return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Student Name</TableCell>
-            <TableCell align="left">USN</TableCell>
-            <TableCell align="left">Semester</TableCell>
-            <TableCell align="left">Department</TableCell>
-            <TableCell align="left">Section</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {studentdata.map((student) => (
-            <Row key={student.id} student={student} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-}
+    const [studentList, setStudentList] = React.useState([]);
+    const [error, setError] = React.useState("");
+  
+    React.useEffect(() => {
+      const fetchAllStudents = async () => {
+        try {
+          const res = await getAllStudents(localStorage.getItem("token"));
+          console.log(res);
+          setStudentList(res.data);
+        } catch (error) {
+          console.error("Error getting list: " + error.message);
+          if (error.response && error.response.status === 403) {
+            setError("All students list is restricted to Admin only! Please login as admin.");
+          } else {
+            setError("An error occurred while fetching the profile.");
+          }
+        }
+      };
+  
+      fetchAllStudents();
+    }, []);
+  
+    return (
+      <TableContainer component={Paper} sx={{ pt: { xs: 14, sm: 15 }, pb: { xs: 8, sm: 8 } }}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Student Name</TableCell>
+              <TableCell align="left">USN</TableCell>
+              <TableCell align="left">Semester</TableCell>
+              <TableCell align="left">Department</TableCell>
+              <TableCell align="left">Section</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {studentList.length > 0 ? (
+              studentList.map((student) => (
+                <Row key={student._id} student={student} />
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} align="center">
+                  {error || "No students found."}
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  }

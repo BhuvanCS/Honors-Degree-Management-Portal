@@ -9,6 +9,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Tooltip from '@mui/material/Tooltip';
 export default function CourseCard({iscompleted}) {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Handle the file here
+      console.log('Selected file:', file);
+    }
+  };
   return (
     <Card sx={{ maxWidth: '100%', height: '100%' }}>
       <CardActionArea>
@@ -40,9 +47,21 @@ export default function CourseCard({iscompleted}) {
               </IconButton>
           </Tooltip>
           <Tooltip title="Uplode Certificate">
-              <IconButton aria-label="uplode certificate" size="small">
-              <UploadFileIcon />
+            {/* Icon button for file upload */}
+          <div>
+            <input
+              accept="image/png, image/jpeg, application/pdf"
+              style={{ display: 'none' }}
+              id="upload-file-input"
+              type="file"
+              onChange={handleFileChange}
+            />
+            <label htmlFor="upload-file-input">
+              <IconButton aria-label="upload certificate" component="span" size="small">
+                <UploadFileIcon />
               </IconButton>
+            </label>
+          </div>
           </Tooltip>
        
       

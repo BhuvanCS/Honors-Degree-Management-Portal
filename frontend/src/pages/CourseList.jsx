@@ -16,7 +16,7 @@ import AuthContext from "../context/AuthContext";
 // const coursedata=[1,2,3,4,5,5]
 
 export default function CourseList() {
-  const { user, loading, setUser } = React.useContext(AuthContext);
+  
   const [courselist, setCourselist] = React.useState([]);
 
   React.useEffect(() => {
@@ -88,9 +88,12 @@ function CourseCard({ course }) {
       <CardActionArea onClick={handleChange}>
         <Grid container>
           <Grid item xs={2} sx={{ p: 2 }}>
-            <Typography gutterBottom variant="body1" component="div">
-              Course
-            </Typography>
+          <CardMedia
+          component="img"
+          sx={{ height: 110, maxWidth: "100%", objectFit: "cover" }}
+          src="/course_image.jpg"
+          alt="course image"
+        />
           </Grid>
           <Grid item xs={10}>
             <CardContent>

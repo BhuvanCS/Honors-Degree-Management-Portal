@@ -17,6 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CourseTab from './CourseTab';
 import { useNavigate } from "react-router-dom";
 import { getAllStudents } from '../api';
+import { Alert, Container } from '@mui/material';
 
 
 const studentdata = [
@@ -345,6 +346,14 @@ export default function StudentList() {
   
       fetchAllStudents();
     }, []);
+
+    if (error) {
+      return (
+        <Container maxWidth="md">
+          <Alert severity="error">{error}</Alert>
+        </Container>
+      );
+    }
   
     return (
       <TableContainer component={Paper} sx={{ pt: { xs: 14, sm: 15 }, pb: { xs: 8, sm: 8 } }}>

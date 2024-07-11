@@ -58,3 +58,17 @@ export const updateStudentStatus = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const deleteStudent = async (req, res) => {
+  const { usn } = req.body;
+  try {
+    const student = await User.findOne({ usn });
+    if (!student) return res.status(404).json({ message: "Student not found" });
+
+    await student.deleteOne();
+
+    res.status(200).json({ message: "Student record deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

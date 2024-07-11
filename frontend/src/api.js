@@ -24,6 +24,16 @@ export const verifyCompletion = (data, token) =>
   api.patch("/studentcourse/verifyCourse", data, {
     headers: { Authorization: `Bearer ${token}` },
   });
+export const acceptStudent = (data, token) =>
+  api.patch("/students/status", data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+export const rejectStudent = (data, token) => {
+  api.delete("/students/delete", {
+    headers: { Authorization: `Bearer ${token}` },
+    data: data
+  });
+}
 
 export const getAllStudents = (token) =>
   api.get(`/students/`, {
@@ -35,6 +45,10 @@ export const getProfile = (usn, token) =>
   });
 export const getStudentProfile = (usn, token) =>
   api.get(`/students/${usn}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+export const getAllStudentCourse = (token) =>
+  api.get('/studentcourse/all', {
     headers: { Authorization: `Bearer ${token}` },
   });
 export const enrollToCourse = (data, token) =>

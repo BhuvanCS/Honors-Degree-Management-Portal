@@ -7,6 +7,7 @@ import axios from 'axios';
 import { getCourseList } from '../api';
 import CourseCardEnroll from '../components/courses/CourseCardEnroll';
 import AuthContext from '../context/AuthContext';
+import { Alert, Container } from '@mui/material';
 
 export default function CourseListEnroll() {
   const [courses, setCourses] = React.useState([]);
@@ -35,7 +36,11 @@ export default function CourseListEnroll() {
   }, []);
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <Container maxWidth="md">
+        <Alert severity="error">{error}</Alert>
+      </Container>
+    );
   }
 
   return (

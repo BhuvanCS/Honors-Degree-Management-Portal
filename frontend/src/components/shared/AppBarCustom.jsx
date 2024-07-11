@@ -44,6 +44,57 @@ function AppBarCustom({ mode, toggleColorMode }) {
     }
   };
 
+  const renderMenuItems = () => {
+    if (user) {
+      if (user.role === "admin") {
+        return (
+          <>
+            <MenuItem component={Link} to="/admin">
+            <Typography variant="body" color="text.primary">Home</Typography>
+              
+            </MenuItem>
+            <MenuItem component={Link} to="/admin/allstudents">
+            <Typography variant="body" color="text.primary">Student List</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to="/coursedashboard">
+            <Typography variant="body" color="text.primary">Course Dashboard</Typography>
+            </MenuItem>
+          </>
+        );
+      } else if (user.role === "student") {
+        return (
+          <>
+            <MenuItem component={Link} to="/student">
+            <Typography variant="body" color="text.primary">Home</Typography>
+            </MenuItem>
+            <MenuItem component={Link} to="/courselist/enroll">
+            <Typography variant="body" color="text.primary">Enroll</Typography>
+            </MenuItem>
+          </>
+        );
+      }
+    } else {
+      return (
+        <>
+          <MenuItem component={Link} to="/">
+          <Typography variant="body1" color="text.primary">Home</Typography>
+          </MenuItem>
+          <MenuItem component={Link} to="/courselist">
+          <Typography variant="body1" color="text.primary">Courses</Typography>
+          </MenuItem>
+          <MenuItem
+            onClick={() => scrollToSection("guidelines")}
+            sx={{ py: "6px", px: "12px" }}
+          >
+            <Typography variant="body1" color="text.primary">
+              Guidelines
+            </Typography>
+          </MenuItem>
+        </>
+      );
+    }
+  };
+
   return (
     <div>
       <AppBar
@@ -88,43 +139,12 @@ function AppBarCustom({ mode, toggleColorMode }) {
               }}
             >
               <img
-                src='/custom-logo.png'
+                src="/custom-logo.png"
                 style={logoStyle}
                 alt="logo of sitemark"
               />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <MenuItem
-                  onClick={() => scrollToSection("features")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Home
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection("features")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Courses
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection("testimonials")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Testimonials
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection("faq")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    FAQ
-                  </Typography>
-                </MenuItem>
+                {renderMenuItems()}
               </Box>
             </Box>
             <Box
@@ -137,7 +157,11 @@ function AppBarCustom({ mode, toggleColorMode }) {
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
               {user ? (
                 <>
-                  <Typography variant="body2" color="text.primary" marginRight="5px">
+                  <Typography
+                    variant="body2"
+                    color="text.primary"
+                    marginRight="5px"
+                  >
                     {user.usn}
                   </Typography>
                   <Logout />
@@ -206,46 +230,56 @@ function AppBarCustom({ mode, toggleColorMode }) {
                       toggleColorMode={toggleColorMode}
                     />
                   </Box>
-                  <MenuItem onClick={() => scrollToSection("features")}>
-                    Features
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("testimonials")}>
-                    Testimonials
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("highlights")}>
-                    Highlights
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("pricing")}>
-                    Pricing
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("faq")}>
-                    FAQ
-                  </MenuItem>
+                  {renderMenuItems()}
                   <Divider />
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-up/"
-                      target="_blank"
-                      sx={{ width: "100%" }}
-                    >
-                      Sign up
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-in/"
-                      target="_blank"
-                      sx={{ width: "100%" }}
-                    >
-                      Sign in
-                    </Button>
-                  </MenuItem>
+                  {user ? (
+                    <>
+                      <Button
+                        color="primary"
+                        variant="text"
+                        size="small"
+                        onClick={logout}
+                        sx={{ width: "100%" }}
+                      >
+                        Logout
+                      </Button>
+                      <Button
+                        color="primary"
+                        variant="text"
+                        size="small"
+                        component={Link}
+                        to={`/profile/${user.usn}`}
+                        sx={{ width: "100%" }}
+                      >
+                        Profile
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <MenuItem>
+                        <Button
+                          color="primary"
+                          variant="contained"
+                          component={Link}
+                          to="/register"
+                          sx={{ width: "100%" }}
+                        >
+                          Register
+                        </Button>
+                      </MenuItem>
+                      <MenuItem>
+                        <Button
+                          color="primary"
+                          variant="outlined"
+                          component={Link}
+                          to="/login"
+                          sx={{ width: "100%" }}
+                        >
+                          Sign in
+                        </Button>
+                      </MenuItem>
+                    </>
+                  )}
                 </Box>
               </Drawer>
             </Box>

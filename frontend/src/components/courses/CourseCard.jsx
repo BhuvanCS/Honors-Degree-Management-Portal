@@ -68,7 +68,7 @@ export default function CourseCard({ course }) {
         <CardMedia
           component="img"
           sx={{ height: 110, maxWidth: "100%", objectFit: "cover" }}
-          image="/course_image.jpg"
+          src="/course_image.jpg"
           alt="course image"
         />
         <CardContent>

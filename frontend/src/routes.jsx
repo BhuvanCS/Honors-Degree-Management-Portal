@@ -22,6 +22,7 @@ import CourseDetail from "./pages/CourseDetail.jsx";
 import StudentList from "./pages/StudentList.jsx";
 import StudentLandingPage from "./pages/StudentLandingPage.jsx";
 import CourseListEnroll from "./pages/CourseListEnroll.jsx";
+import AdminLandingPage from "./pages/AdminLandingPage.jsx";
 // import AdminDashboard from './pages/Admin/AdminDashboard';
 // import StudentDashboard from './pages/Student/StudentDashboard';
 
@@ -85,6 +86,14 @@ function AppRoutes({ mode, toggleColorMode }) {
             element={
               <ProtectedRoute role="student">
                 <StudentLandingPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute role="admin">
+                <AdminLandingPage />
               </ProtectedRoute>
             }
           />

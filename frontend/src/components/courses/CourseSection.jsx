@@ -33,7 +33,7 @@ export default function CourseSection({isCompleted, title, courses}) {
   }, [expanded]);
 
   return (
-        <Paper sx={{ padding: 2 }} elevation={3}>
+        <Paper sx={{ padding: 2, width:"90%" ,alignSelf:"center"}} elevation={3}>
         <Stack
           direction="row"
           sx={{ paddingBottom: 2 }}

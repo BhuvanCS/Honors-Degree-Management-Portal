@@ -29,9 +29,6 @@ export default function CourseCardEnroll({ course }) {
         throw new Error('No token found');
       }
 
-      console.log('Token:', token);
-      console.log('Data:', data);
-
       // Call the enrollToCourse API
       const response = await enrollToCourse(data, token);
       console.log('Response:', response);

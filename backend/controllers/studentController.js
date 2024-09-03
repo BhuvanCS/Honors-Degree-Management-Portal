@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const getAllStudents = async (req, res) => {
   try {
-    const students = await User.find({ role: "student" }).populate('courses');
+    const students = await User.find({ role: "student" }).populate("courses");
     res.status(200).json(students);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -13,7 +13,7 @@ export const getAllStudents = async (req, res) => {
 export const getStudentProfile = async (req, res) => {
   const { usn } = req.params;
   try {
-    const student = await User.findOne({ usn }).populate('courses');
+    const student = await User.findOne({ usn }).populate("courses");
 
     if (student) {
       const studentCourses = await StudentCourse.find({
@@ -22,7 +22,7 @@ export const getStudentProfile = async (req, res) => {
       const courses = studentCourses.map((sc) => ({
         course: sc.course,
         certificateLink: sc.certificateLink,
-        isCompleted: sc.isCompleted
+        isCompleted: sc.isCompleted,
       }));
 
       const profile = {

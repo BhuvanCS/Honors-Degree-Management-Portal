@@ -18,12 +18,6 @@ import {
 import { getCourseList } from "../api";
 import { Box } from "@mui/material";
 const columns = [
-  // {
-  //   field: "action",headerName: "Action",sortable: false,
-  //   renderCell: (params) => {
-  //     return <DropDown />
-  //   }
-  // },
   {
     field: "name",
     headerName: "Course",
@@ -71,10 +65,8 @@ function CustomToolbar() {
       <GridToolbarDensitySelector
         slotProps={{ tooltip: { title: "Change density" } }}
       />
-      
-      <GridToolbarExport
-      
-      />
+
+      <GridToolbarExport />
       <AddCourse />
     </GridToolbarContainer>
   );
@@ -88,7 +80,10 @@ export default function CourseDashboard() {
     const fetchCourses = async () => {
       try {
         const response = await getCourseList();
-        response.data = response.data.map((course, index) => ({ ...course, id: course.courseId || index}))
+        response.data = response.data.map((course, index) => ({
+          ...course,
+          id: course.courseId || index,
+        }));
         setCoursedata(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -103,11 +98,20 @@ export default function CourseDashboard() {
     event, // MuiEvent<React.MouseEvent<HTMLElement>>
     details // GridCallbackDetails
   ) => {
-    navigate("/courseinfo", { state: params.row });
+    console.log(params, details)
+    navigate(`/course/${params.row.courseId}`);
+    
   };
 
   return (
-    <Box sx={{ height: 400, width: "100%", pt: { xs: 14, sm: 15 }, pb: { xs: 8, sm: 8 } }}>
+    <Box
+      sx={{
+        height: 400,
+        width: "100%",
+        pt: { xs: 14, sm: 15 },
+        pb: { xs: 8, sm: 8 },
+      }}
+    >
       <DataGrid
         onRowClick={handleRowClick}
         rows={coursedata}
@@ -118,23 +122,21 @@ export default function CourseDashboard() {
           },
         }}
         pageSizeOptions={[5, 10]}
-       
         slots={{
           toolbar: CustomToolbar,
         }}
-
-        sx = {{pl:2, pt: 2}}
+        sx={{ pl: 2, pt: 2 }}
       />
     </Box>
   );
 }
 
 function AddCourse() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleClick = () => {
-      navigate('/add-course');
-    };
+  const handleClick = () => {
+    navigate("/add-course");
+  };
   return (
     <Button variant="text" startIcon={<AddIcon />} onClick={handleClick}>
       Add Record

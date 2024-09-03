@@ -154,7 +154,7 @@ export const getAllStudentCourse = async (req, res) => {
       .populate("student")
       .populate("course");
 
-      res.status(200).json(studentcourses);
+    res.status(200).json(studentcourses);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

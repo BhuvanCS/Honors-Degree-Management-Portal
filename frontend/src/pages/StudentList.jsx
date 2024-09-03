@@ -282,10 +282,10 @@ function Row(props) {
         </TableCell>
         <TableCell component="th" scope="row">{student.name}</TableCell>
         <TableCell align="left">{student.usn}</TableCell>
-        <TableCell align="left">{student.name}</TableCell> 
         <TableCell align="left">{student.email}</TableCell>
-        <TableCell ><Button variant="outlined" onClick={() =>{handleRowClick(student)}} startIcon={<EditIcon /> }>
-        Edit</Button></TableCell>
+        <TableCell align="left">{student.cgpa}</TableCell> 
+        <TableCell ><Button variant="outlined" onClick={() =>{handleRowClick(student)}} >
+        View Profile</Button></TableCell>
       </TableRow>
       <TableRow type={'button'}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
@@ -363,9 +363,9 @@ export default function StudentList() {
               <TableCell />
               <TableCell>Student Name</TableCell>
               <TableCell align="left">USN</TableCell>
-              <TableCell align="left">Semester</TableCell>
-              <TableCell align="left">Department</TableCell>
-              <TableCell align="left">Section</TableCell>
+              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">CGPA</TableCell>
+              <TableCell align="left">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -31,7 +31,7 @@ const CourseDetail = () => {
           courseId.courseId,
           localStorage.getItem("token")
         );
-        
+
         setCourseDetails(res1.data);
         setStudentList(res2.data);
       } catch (error) {
@@ -113,7 +113,11 @@ const CourseDetail = () => {
                   <Button
                     variant="outlined"
                     component="a"
-                    href={student.certificateLink}
+                    href={
+                      student.certificateLink.startsWith("http")
+                        ? student.certificateLink
+                        : `http://${student.certificateLink}`
+                    }
                     target="_blank"
                   >
                     View Certificate

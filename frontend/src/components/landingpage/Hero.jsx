@@ -55,9 +55,7 @@ export default function Hero() {
             color="text.secondary"
             sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
           >
-            Explore our cutting-edge dashboard, delivering high-quality solutions
-            tailored to your needs. Elevate your experience with top-tier features
-            and services.
+            Please refer the guidelines below to know if you are eligible to enroll yourself in VTU Honours 2024
           </Typography>
         </Stack>
      

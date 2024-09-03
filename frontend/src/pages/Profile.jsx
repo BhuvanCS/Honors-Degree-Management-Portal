@@ -91,7 +91,7 @@ const Profile = () => {
               <ListItem
                 button
                 component={Link}
-                to={`/course/${course._id}`}
+                to={`/course/${course.courseId}`}
                 alignItems="flex-start"
               >
                 <ListItemAvatar>

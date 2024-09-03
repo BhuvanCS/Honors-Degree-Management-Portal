@@ -76,85 +76,82 @@ function AppRoutes({ mode, toggleColorMode }) {
     <AuthProvider>
       <Router>
         <Routes>
-        <Route element={<Layout mode={mode} toggleColorMode={toggleColorMode} />} > 
-          <Route path="/" element={<LandingPage mode={mode} toggleColorMode={toggleColorMode}/>} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/courselist" element={<CourseList />} />
           <Route
-            path="/student"
-            element={
-              <ProtectedRoute role="student">
-                <StudentLandingPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute role="admin">
-                <AdminLandingPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/courselist/enroll"
-            element={
-              <ProtectedRoute role="student">
-                <CourseListEnroll />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/coursedashboard"
-            element={
-              <ProtectedRoute role="admin">
-                <CourseDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/course/:courseId"
-            element={
-              <ProtectedRoute role="admin">
-                <CourseDetail />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/add-course"
-            element={
-              <ProtectedRoute role="admin">
-                <AddCourse />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/allstudents"
-            element={
-              <ProtectedRoute role="admin">
-                <StudentList />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile/:usn?"
-            element={
-              <ProtectedRoute role="student">
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          {/* 
-          <Route
-            path="/student"
-            element={
-              <ProtectedRoute role="student">
-                <StudentPage />
-              </ProtectedRoute>
-            }
-          /> */}
-          {/* Add more routes as needed */}
+            element={<Layout mode={mode} toggleColorMode={toggleColorMode} />}
+          >
+            <Route
+              path="/"
+              element={
+                <LandingPage mode={mode} toggleColorMode={toggleColorMode} />
+              }
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/courselist" element={<CourseList />} />
+            <Route
+              path="/student"
+              element={
+                <ProtectedRoute role="student">
+                  <StudentLandingPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute role="admin">
+                  <AdminLandingPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/courselist/enroll"
+              element={
+                <ProtectedRoute role="student">
+                  <CourseListEnroll />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/coursedashboard"
+              element={
+                <ProtectedRoute role="admin">
+                  <CourseDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/course/:courseId"
+              element={
+                <ProtectedRoute role="admin">
+                  <CourseDetail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/add-course"
+              element={
+                <ProtectedRoute role="admin">
+                  <AddCourse />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/allstudents"
+              element={
+                <ProtectedRoute role="admin">
+                  <StudentList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile/:usn?"
+              element={
+                <ProtectedRoute role="student">
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
           </Route>
         </Routes>
       </Router>

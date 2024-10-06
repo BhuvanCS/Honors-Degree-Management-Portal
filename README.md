@@ -153,6 +153,7 @@ Refer the server.js and Routes folder to know about all the used APIs in the pro
 - Implement a notification system for course updates.
 - Improve performance with pagination and caching mechanisms.
 - Implement email-based notifications for student application approval or rejection.
+- Implement Message routes for direct communication between Student and Admin.
 
 ## Conclusion
 This project is designed to streamline the management of honors degree courses and students, providing ease of use and functionality for both students and administrators. The system can be further extended for broader functionalities like detailed performance tracking and certificate generation.
